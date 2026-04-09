@@ -1,0 +1,18 @@
+name: Upload to Azure Blob Storage
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Upload to Blob Storage
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az storage blob upload-batch --account-name ashwinistorage2026 --auth-mode key -d privatefiles -s . --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
